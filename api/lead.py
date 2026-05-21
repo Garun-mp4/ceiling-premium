@@ -66,8 +66,8 @@ class handler(BaseHTTPRequestHandler):
         )
 
     def do_POST(self):
-        token = os.environ.get("TELEGRAM_BOT_TOKEN")
-        chat_id = os.environ.get("TELEGRAM_CHAT_ID")
+        token = os.environ.get("TELEGRAM_BOT_TOKEN1")
+        chat_id = os.environ.get("TELEGRAM_CHAT_ID1")
 
         if not token or not chat_id:
             self._send_json({"ok": False, "error": "telegram_env_missing"}, status=500)
