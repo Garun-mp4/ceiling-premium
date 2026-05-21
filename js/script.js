@@ -75,6 +75,22 @@ function setFormStatus(node, message, type) {
   }
 }
 
+function getLeadFormErrorMessage(errorCode) {
+  const messages = {
+    invalid_json: "Не удалось прочитать заявку. Обновите страницу и попробуйте снова.",
+    name_required: "Введите имя, минимум 2 символа.",
+    phone_required: "Проверьте номер телефона: нужен российский номер из 11 цифр.",
+    privacy_consent_required:
+      "Подтвердите согласие на обработку персональных данных.",
+    telegram_env_missing:
+      "Заявку не удалось отправить. Проверьте настройки Telegram в Vercel.",
+    telegram_send_failed:
+      "Telegram не принял заявку. Проверьте токен, chat_id и доступ бота к чату.",
+  };
+
+  return messages[errorCode] || "Не удалось отправить заявку. Попробуйте позже.";
+}
+
 function initYear() {
   document.querySelectorAll("[data-year], #year").forEach((node) => {
     node.textContent = new Date().getFullYear();
@@ -239,7 +255,9 @@ function initLeadForm() {
       phone: leadPhone.value.trim(),
       comment: leadComment?.value.trim() || "",
       estimate: leadEstimate?.value || "",
-      consent: leadConsent.checked,
+      privacyConsent: leadConsent.checked,
+      source: "Форма бесплатного замера",
+      page: window.location.href,
     };
 
     setFormStatus(formStatus, "Отправляем заявку...", null);
@@ -258,13 +276,13 @@ function initLeadForm() {
       });
       const result = await response.json().catch(() => ({}));
 
-      if (!response.ok || !result.success) {
-        throw new Error(result.message || "Не удалось отправить заявку.");
+      if (!response.ok || !result.ok) {
+        throw new Error(getLeadFormErrorMessage(result.error));
       }
 
       setFormStatus(
         formStatus,
-        result.message || "Заявка отправлена. Мы скоро свяжемся с вами.",
+        "Заявка отправлена. Мы скоро свяжемся с вами.",
         "success",
       );
       form.reset();
