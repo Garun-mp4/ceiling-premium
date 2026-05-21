@@ -5,6 +5,8 @@ const materialRates = {
 };
 
 const formatter = new Intl.NumberFormat("ru-RU");
+const leadFormGenericError =
+  "Не удалось отправить заявку. Пожалуйста, попробуйте позже.";
 const prefersReducedMotion = window.matchMedia(
   "(prefers-reduced-motion: reduce)",
 ).matches;
@@ -77,18 +79,13 @@ function setFormStatus(node, message, type) {
 
 function getLeadFormErrorMessage(errorCode) {
   const messages = {
-    invalid_json: "Не удалось прочитать заявку. Обновите страницу и попробуйте снова.",
     name_required: "Введите имя, минимум 2 символа.",
     phone_required: "Проверьте номер телефона: нужен российский номер из 11 цифр.",
     privacy_consent_required:
       "Подтвердите согласие на обработку персональных данных.",
-    telegram_env_missing:
-      "Заявку не удалось отправить. Проверьте настройки Telegram в Vercel.",
-    telegram_send_failed:
-      "Telegram не принял заявку. Проверьте токен, chat_id и доступ бота к чату.",
   };
 
-  return messages[errorCode] || "Не удалось отправить заявку. Попробуйте позже.";
+  return messages[errorCode] || leadFormGenericError;
 }
 
 function initYear() {
@@ -277,7 +274,16 @@ function initLeadForm() {
       const result = await response.json().catch(() => ({}));
 
       if (!response.ok || !result.ok) {
-        throw new Error(getLeadFormErrorMessage(result.error));
+        console.error("Lead form submission failed", {
+          status: response.status,
+          error: result.error || "unknown_error",
+        });
+        setFormStatus(
+          formStatus,
+          getLeadFormErrorMessage(result.error),
+          "error",
+        );
+        return;
       }
 
       setFormStatus(
@@ -290,13 +296,8 @@ function initLeadForm() {
         .querySelector("#price-form")
         ?.dispatchEvent(new Event("input", { bubbles: true }));
     } catch (error) {
-      setFormStatus(
-        formStatus,
-        error instanceof Error
-          ? error.message
-          : "Не удалось отправить заявку. Попробуйте позже.",
-        "error",
-      );
+      console.error("Lead form request failed", error);
+      setFormStatus(formStatus, leadFormGenericError, "error");
     } finally {
       if (submitButton) {
         submitButton.disabled = false;
