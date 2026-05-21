@@ -187,9 +187,11 @@ function initLeadForm() {
 
   const leadName = form.querySelector("#lead-name");
   const leadPhone = form.querySelector("#lead-phone");
+  const leadComment = form.querySelector("#lead-comment");
   const leadConsent = form.querySelector("#lead-consent");
   const leadEstimate = form.querySelector("#lead-estimate");
   const formStatus = form.querySelector("#form-status");
+  const submitButton = form.querySelector('button[type="submit"]');
 
   if (!leadName || !leadPhone || !leadConsent || !formStatus) {
     return;
@@ -199,7 +201,7 @@ function initLeadForm() {
     leadPhone.value = formatPhone(leadPhone.value);
   });
 
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
     setFormStatus(formStatus, "", null);
 
@@ -232,17 +234,56 @@ function initLeadForm() {
       return;
     }
 
-    setFormStatus(
-      formStatus,
-      `Заявка сохранена на странице. Ориентир: ${
-        leadEstimate?.value || "по телефону уточним"
-      }. Для реальной отправки подключите endpoint формы.`,
-      "success",
-    );
-    form.reset();
-    document
-      .querySelector("#price-form")
-      ?.dispatchEvent(new Event("input", { bubbles: true }));
+    const payload = {
+      name: leadName.value.trim(),
+      phone: leadPhone.value.trim(),
+      comment: leadComment?.value.trim() || "",
+      estimate: leadEstimate?.value || "",
+      consent: leadConsent.checked,
+    };
+
+    setFormStatus(formStatus, "Отправляем заявку...", null);
+
+    if (submitButton) {
+      submitButton.disabled = true;
+    }
+
+    try {
+      const response = await fetch("/api/lead", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || "Не удалось отправить заявку.");
+      }
+
+      setFormStatus(
+        formStatus,
+        result.message || "Заявка отправлена. Мы скоро свяжемся с вами.",
+        "success",
+      );
+      form.reset();
+      document
+        .querySelector("#price-form")
+        ?.dispatchEvent(new Event("input", { bubbles: true }));
+    } catch (error) {
+      setFormStatus(
+        formStatus,
+        error instanceof Error
+          ? error.message
+          : "Не удалось отправить заявку. Попробуйте позже.",
+        "error",
+      );
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+      }
+    }
   });
 }
 
