@@ -34,4 +34,4 @@ Lighthouse на локальной статической сборке с обы
 
 Номер Яндекс Метрики не задан: загрузка аналитики отключена. Для включения достаточно конфигурации и новой сборки. Физические устройства iOS/Safari и Android не были доступны; выполнена проверка адаптивной верстки в Chrome, включая уменьшенную анимацию.
 
-Проверенный preview: https://ceiling-premium-oix826b6e-garun-s-projects.vercel.app/ (защита Vercel сохранена; preview закрыт от индексации).
+Проверенный preview: https://ceiling-premium-jih3kcqwf-garun-s-projects.vercel.app/ (защита Vercel сохранена; preview закрыт от индексации).
