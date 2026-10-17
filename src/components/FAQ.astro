@@ -1,0 +1,28 @@
+---
+import { faq as defaultItems } from '../data/site';
+interface Props {
+  items?: ReadonlyArray<readonly [string, string]>;
+  title?: string;
+}
+const { items = defaultItems, title = 'Хорошие вопросы.' } = Astro.props;
+---
+
+<section class="section faq-section">
+  <div class="shell faq-grid">
+    <div>
+      <h2>{title}</h2>
+      <p class="muted">Поможем разобраться ещё до замера.</p>
+    </div>
+    <div class="faq-list">
+      {items.map(([question, answer]) => (
+        <details>
+          <summary>
+            {question}
+            <span aria-hidden="true">+</span>
+          </summary>
+          <p>{answer}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

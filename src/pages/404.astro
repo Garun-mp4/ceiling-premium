@@ -1,0 +1,30 @@
+---
+import Arrow from '../components/Arrow.astro';
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Страница не найдена"
+  description="Такой страницы нет. Вернитесь на главную, посмотрите проекты ПОЛЕ или рассчитайте потолок для вашей комнаты."
+  noindex
+>
+  <div class="shell">
+    <div class="error-page">
+      <p>404</p>
+      <h1>
+        Здесь пока
+        <br />
+        только воздух.
+      </h1>
+      <p>Возможно, ссылка изменилась. Найдём нужное пространство на другой странице.</p>
+      <div class="actions">
+        <a href="/" class="button">
+          На главную <Arrow />
+        </a>
+        <a href="/proekty/" class="text-link">
+          Посмотреть проекты <Arrow />
+        </a>
+      </div>
+    </div>
+  </div>
+</Base>

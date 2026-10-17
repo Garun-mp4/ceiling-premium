@@ -1,0 +1,30 @@
+{
+  "name": "pole-ceilings",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --host 127.0.0.1",
+    "check": "astro check",
+    "build": "astro build && node scripts/validate-build.mjs",
+    "preview": "astro preview --host 127.0.0.1",
+    "test": "node --experimental-strip-types --test tests/pricing.test.ts && python -m unittest discover -s tests -p test_*.py",
+    "assets": "node scripts/prepare-assets.mjs",
+    "format": "prettier --write src scripts tests *.json *.mjs *.md",
+    "format:check": "prettier --check src scripts tests *.json *.mjs *.md"
+  },
+  "dependencies": {
+    "astro": "^7.4.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "axe-core": "^4.14.0",
+    "prettier": "^3.9.10",
+    "prettier-plugin-astro": "^1.1.1",
+    "sharp": "^0.35.5",
+    "typescript": "^6.0.3"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

@@ -1,0 +1,34 @@
+---
+import Arrow from './Arrow.astro';
+import Media from './Media.astro';
+import type { Project } from '../data/content';
+const { project, index = 0 } = Astro.props as { project: Project; index?: number };
+---
+
+<article
+  class="project-card"
+  data-project
+  data-room={project.room}
+  data-solution={project.solution}
+>
+  <a href={`/proekty/${project.slug}/`} class="project-link">
+    <div class="project-image">
+      <Media name={project.image} alt={project.alt} sizes="(max-width: 760px) 100vw, 50vw" />
+      <span class="image-arrow" aria-hidden="true">
+        <Arrow />
+      </span>
+    </div>
+    <div class="project-meta">
+      <div>
+        <span class="project-category">
+          {project.area} м² · {project.material}
+        </span>
+        <h3>{project.title}</h3>
+        <p>{project.subtitle}</p>
+      </div>
+      <span class="project-index" aria-hidden="true">
+        {String(index + 1).padStart(2, '0')}
+      </span>
+    </div>
+  </a>
+</article>

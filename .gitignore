@@ -1,4 +1,16 @@
 .env
 .env.local
+.env.*
+!.env.example
 __pycache__/
 *.py[cod]
+node_modules/
+dist/
+.astro/
+.vercel/
+assets-source/*.png
+assets-source/*.jpg
+.playwright-cli/
+test-results/
+.agents/
+skills-lock.json

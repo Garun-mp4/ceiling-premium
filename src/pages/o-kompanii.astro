@@ -1,0 +1,99 @@
+---
+import Arrow from '../components/Arrow.astro';
+import Base from '../layouts/Base.astro';
+import Media from '../components/Media.astro';
+import ContactSection from '../components/ContactSection.astro';
+import FAQ from '../components/FAQ.astro';
+import { steps } from '../data/site';
+---
+
+<Base
+  title="Наш подход к потолкам и свету"
+  description="ПОЛЕ: продумываем потолок как часть интерьера. Замер, подбор материалов, понятная смета, аккуратный монтаж и доступное обслуживание освещения."
+  breadcrumbs={[{ title: 'О компании', href: '/o-kompanii/' }]}
+>
+  <div class="shell">
+    <div class="page-intro">
+      <h1>
+        Хорошая работа
+        <br />
+        начинается с внимания.
+      </h1>
+      <p>
+        К комнате, к привычкам, к маленьким деталям. ПОЛЕ — о потолках, которые естественно
+        становятся частью вашего дома.
+      </p>
+    </div>
+    <div class="page-cover">
+      <Media
+        name="process-measure"
+        alt="Мастер выполняет замер помещения лазерным дальномером"
+        priority
+        sizes="100vw"
+      />
+    </div>
+  </div>
+  <section class="section shell split-section">
+    <div>
+      <h2>
+        Сначала пространство.
+        <br />
+        Потом технология.
+      </h2>
+    </div>
+    <div class="prose">
+      <p>
+        Мы не начинаем с каталога профилей. Сначала смотрим, как устроена комната: где вы читаете,
+        где стоит стол, когда солнце попадает в окно и какой свет нужен вечером.
+      </p>
+      <p>
+        Из этого складывается потолок — его отметка, поверхность, примыкания и сценарии освещения.
+        Технические решения объясняем понятным языком и показываем на образцах.
+      </p>
+      <p>
+        Работаем в Астрахани и области. Возможность и условия выезда за город обсуждаем при первом
+        обращении.
+      </p>
+    </div>
+  </section>
+  <section class="section pricing-intro">
+    <div class="shell">
+      <div class="section-heading">
+        <h2>Понятно на каждом этапе.</h2>
+      </div>
+      <div class="process-grid">
+        {steps.map((step, index) => (
+          <article class="process-item">
+            <span>0{index + 1}</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+  <section class="section shell split-section">
+    <Media name="process-check" alt="Проверка примыкания и света после монтажа натяжного потолка" />
+    <div>
+      <h2>
+        Приёмка —<br />
+        тоже часть работы.
+      </h2>
+      <p>
+        Проверяем потолок при дневном и искусственном свете. Смотрим поверхность, углы, примыкания и
+        работу каждого источника.
+      </p>
+      <ul class="open-list">
+        <li>Комплектация и порядок оплаты — до начала работ</li>
+        <li>Защита помещения и подготовка рабочей зоны</li>
+        <li>Понятный доступ к оборудованию</li>
+        <li>Условия гарантии отдельно на материалы и монтаж</li>
+      </ul>
+      <a class="text-link" href="/proekty/">
+        Рассмотреть проекты <Arrow />
+      </a>
+    </div>
+  </section>
+  <FAQ />
+  <ContactSection source="about" />
+</Base>

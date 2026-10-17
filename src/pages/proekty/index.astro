@@ -1,0 +1,45 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import ContactSection from '../../components/ContactSection.astro';
+import { projects } from '../../data/content';
+---
+
+<Base
+  title="Проекты потолков и света"
+  description="Рассмотрите потолки в разных интерьерах: от компактной ванной до кухни-гостиной. Фактуры, примыкания, освещение и подробные комплектации."
+  breadcrumbs={[{ title: 'Проекты', href: '/proekty/' }]}
+>
+  <section class="shell">
+    <div class="page-intro">
+      <h1>
+        Пространства,
+        <br />
+        продуманные до света.
+      </h1>
+      <p>Посмотрите, как разные поверхности и сценарии освещения меняют характер комнаты.</p>
+    </div>
+    <div class="project-filters" data-project-filters aria-label="Фильтр по помещению">
+      {['Все', ...new Set(projects.map((project) => project.room))].map((room, index) => (
+        <button
+          type="button"
+          class="filter-button"
+          data-filter={room}
+          aria-pressed={index === 0 ? 'true' : 'false'}
+        >
+          {room}
+        </button>
+      ))}
+    </div>
+    <p class="filter-result" role="status" aria-live="polite" data-filter-result>
+      6 проектов
+    </p>
+    <div class="projects-grid">
+      {projects.map((project, index) => (
+        <ProjectCard project={project} index={index} />
+      ))}
+    </div>
+  </section>
+  <div style="height:64px"></div>
+  <ContactSection source="projects" />
+</Base>

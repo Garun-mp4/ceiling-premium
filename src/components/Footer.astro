@@ -1,0 +1,61 @@
+---
+import Arrow from './Arrow.astro';
+import { site, navigation } from '../data/site';
+---
+
+<footer class="site-footer">
+  <div class="shell footer-top">
+    <div>
+      <a href="/" class="footer-brand" aria-label="ПОЛЕ — главная">
+        <img src="/brand/pole-logo.png" alt="ПОЛЕ" width="432" height="144" loading="lazy" />
+      </a>
+      <p>
+        Потолки и свет.
+        <br />
+        Продуманы вместе.
+      </p>
+      <p class="footer-region">{site.region}</p>
+    </div>
+    <nav aria-label="Разделы сайта">
+      {navigation.map(([href, label]) => (
+        <a href={href}>{label}</a>
+      ))}
+    </nav>
+    <div class="footer-contacts">
+      <a href={`tel:${site.tel}`} data-event="phone_click">
+        {site.phone}
+      </a>
+      <a href={site.telegram} target="_blank" rel="noopener" data-event="telegram_click">
+        Telegram <Arrow />
+      </a>
+      <a href={site.whatsapp} target="_blank" rel="noopener" data-event="whatsapp_click">
+        WhatsApp <Arrow />
+      </a>
+    </div>
+  </div>
+  <div class="shell footer-bottom">
+    <span>© {new Date().getFullYear()} ПОЛЕ</span>
+    <nav aria-label="Правовые документы">
+      <a href="/privacy/">Конфиденциальность</a>
+      <a href="/consent/">Согласие на обработку данных</a>
+      <a href="/cookies/">Cookies</a>
+      <button class="text-button" type="button" data-cookie-settings hidden>
+        Настройки cookies
+      </button>
+    </nav>
+  </div>
+</footer>
+<div class="mobile-contact-bar" aria-label="Быстрая связь">
+  <a href={site.telegram} target="_blank" rel="noopener" data-event="telegram_click">
+    Telegram{' '}
+    <span aria-hidden="true">
+      <Arrow />
+    </span>
+  </a>
+  <a href={site.whatsapp} target="_blank" rel="noopener" data-event="whatsapp_click">
+    WhatsApp{' '}
+    <span aria-hidden="true">
+      <Arrow />
+    </span>
+  </a>
+</div>

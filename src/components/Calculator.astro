@@ -1,0 +1,135 @@
+---
+import Arrow from './Arrow.astro';
+import {
+  defaults,
+  calculate,
+  money,
+  rates,
+  materialLabels,
+  profileLabels,
+  fieldLabels,
+} from '../lib/pricing';
+import { projects, solutions } from '../data/content';
+const result = calculate(defaults);
+const presets = {
+  projects: Object.fromEntries(projects.map((p) => [p.slug, p.calculator])),
+  solutions: Object.fromEntries(solutions.map((s) => [s.slug, s.preset])),
+};
+---
+
+<div class="calculator" id="calculator">
+  <form data-calculator novalidate>
+    <script type="application/json" data-presets set:html={JSON.stringify(presets)} />
+    <div class="calculator-grid">
+      <div>
+        <div class="calc-fields">
+          <label>
+            Площадь, м²
+            <input type="text" inputmode="decimal" name="area" value={defaults.area} required />
+            <span class="field-error" data-calc-error="area"></span>
+          </label>
+          <label>
+            Периметр, пог. м
+            <input
+              type="text"
+              inputmode="decimal"
+              name="perimeter"
+              value={defaults.perimeter}
+              required
+            />
+            <span class="field-error" data-calc-error="perimeter"></span>
+          </label>
+          <label>
+            Фактура
+            <select name="material">
+              {Object.entries(materialLabels).map(([value, label]) => (
+                <option value={value}>{label}</option>
+              ))}
+            </select>
+            <span class="field-error" data-calc-error="material"></span>
+          </label>
+          <label>
+            Примыкание
+            <select name="profile">
+              {Object.entries(profileLabels).map(([value, label]) => (
+                <option value={value}>{label}</option>
+              ))}
+            </select>
+            <span class="field-error" data-calc-error="profile"></span>
+          </label>
+          <label class="full">
+            Точечные светильники, шт.
+            <input
+              type="number"
+              inputmode="numeric"
+              name="lights"
+              min="0"
+              max="80"
+              step="1"
+              value={defaults.lights}
+            />
+            <span class="field-error" data-calc-error="lights"></span>
+          </label>
+        </div>
+        <p class="field-help" style="margin-top:16px">
+          Периметр — сумма длин всех стен комнаты. Не знаете размеры? Оставьте заявку, поможем с
+          замером.
+        </p>
+        <details class="calc-extra">
+          <summary>Световые линии, треки и другие детали</summary>
+          <div class="calc-fields">
+            {(['lines', 'tracks', 'curtain', 'corners', 'pipes'] as const).map((key) => (
+              <label>
+                {fieldLabels[key]},{' '}
+                {['lines', 'tracks', 'curtain'].includes(key) ? 'пог. м' : 'шт.'}
+                <input
+                  type="text"
+                  inputmode={['corners', 'pipes'].includes(key) ? 'numeric' : 'decimal'}
+                  name={key}
+                  value={defaults[key]}
+                />
+                <span class="field-error" data-calc-error={key}></span>
+              </label>
+            ))}
+          </div>
+        </details>
+        <noscript>
+          <p>
+            Для интерактивного расчёта включите JavaScript. Ниже показан ориентир для комнаты 18 м².
+            Можно сразу обсудить проект по телефону или в мессенджере.
+          </p>
+        </noscript>
+      </div>
+      <div class="estimate">
+        <span class="estimate-label">Ориентир для одной комнаты</span>
+        <output class="estimate-price" data-price-range aria-live="polite">
+          {money(result.low)} – {money(result.high)}
+        </output>
+        <p class="calc-invalid" data-calculation-error hidden>
+          Проверьте параметры — расчёт обновится после исправления.
+        </p>
+        <div class="estimate-rows" data-estimate-rows>
+          {result.rows.map((row) => (
+            <div class="estimate-row">
+              <span>
+                {row.label} · {row.quantity} {row.unit}
+              </span>
+              <strong>{money(row.total)}</strong>
+            </div>
+          ))}
+        </div>
+        <a class="button" href="#lead-form" data-estimate-cta>
+          Уточнить смету на замере{' '}
+          <span aria-hidden="true">
+            <Arrow />
+          </span>
+        </a>
+        <p class="estimate-footnote">
+          Минимальный заказ — {money(rates.minimum)}. В ориентир не включены сами точечные и
+          трековые светильники, сложная проводка и нестандартная подготовка основания. Точная смета
+          фиксируется после замера.
+        </p>
+      </div>
+    </div>
+  </form>
+</div>

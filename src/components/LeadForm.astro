@@ -1,0 +1,81 @@
+---
+import Arrow from './Arrow.astro';
+import { site } from '../data/site';
+const { source = 'contact' } = Astro.props;
+---
+
+<form
+  class="lead-form"
+  action="/api/lead"
+  method="post"
+  data-lead-form
+  data-source={source}
+  novalidate
+>
+  <label>
+    Телефон <span class="required-note">обязательно</span>
+    <input
+      type="tel"
+      name="phone"
+      autocomplete="tel"
+      inputmode="tel"
+      placeholder="+7 999 123-45-67"
+      required
+      maxlength="32"
+      aria-describedby="phone-help"
+    />
+    <span class="field-error" data-error="phone"></span>
+  </label>
+  <p class="field-help" id="phone-help">
+    Свяжемся, обсудим задачу и удобное время замера.
+  </p>
+  <label>
+    Как к вам обращаться <span class="required-note">необязательно</span>
+    <input type="text" name="name" autocomplete="name" maxlength="80" placeholder="Ваше имя" />
+    <span class="field-error" data-error="name"></span>
+  </label>
+  <label>
+    Что планируете? <span class="required-note">необязательно</span>
+    <textarea
+      name="comment"
+      rows="3"
+      maxlength="1000"
+      placeholder="Комната, район, пожелания по свету"
+    ></textarea>
+    <span class="field-error" data-error="comment"></span>
+  </label>
+  <div class="honeypot" aria-hidden="true">
+    <label>
+      Ваш сайт
+      <input name="website" tabindex="-1" autocomplete="off" />
+    </label>
+  </div>
+  <label class="consent-label">
+    <input type="checkbox" name="privacyConsent" required />
+    <span>
+      Даю{' '}
+      <a href="/consent/" target="_blank" rel="noopener">
+        согласие на обработку персональных данных
+      </a>{' '}
+      и ознакомлен(а) с{' '}
+      <a href="/privacy/" target="_blank" rel="noopener">
+        политикой
+      </a>
+      .
+    </span>
+  </label>
+  <span class="field-error" data-error="privacyConsent"></span>
+  <button class="button" type="submit" disabled>
+    Обсудить мой проект{' '}
+    <span aria-hidden="true">
+      <Arrow />
+    </span>
+  </button>
+  <p class="form-status" role="status" aria-live="polite" tabindex="-1"></p>
+  <noscript>
+    <p>
+      Для отправки формы включите JavaScript или <a href={site.telegram}>напишите нам в Telegram</a>
+      .
+    </p>
+  </noscript>
+</form>

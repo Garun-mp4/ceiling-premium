@@ -1,0 +1,15 @@
+assets-source/
+images/
+css/
+js/
+index.html
+privacy.html
+ceiling.svg
+tests/
+.agents/
+skills-lock.json
+.playwright-cli/
+test-results/
+.env*
+node_modules/
+dist/

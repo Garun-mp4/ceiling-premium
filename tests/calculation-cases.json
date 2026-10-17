@@ -1,0 +1,82 @@
+[
+  {
+    "name": "default",
+    "input": {
+      "area": 18,
+      "perimeter": 18,
+      "material": "matte",
+      "profile": "standard",
+      "lights": 6,
+      "lines": 0,
+      "tracks": 0,
+      "curtain": 0,
+      "corners": 4,
+      "pipes": 0
+    },
+    "expected": { "subtotal": 12582, "total": 12582, "low": 11950, "high": 13840 }
+  },
+  {
+    "name": "minimum order",
+    "input": {
+      "area": 2,
+      "perimeter": 4,
+      "material": "matte",
+      "profile": "standard",
+      "lights": 0,
+      "lines": 0,
+      "tracks": 0,
+      "curtain": 0,
+      "corners": 4,
+      "pipes": 0
+    },
+    "expected": { "subtotal": 1398, "total": 9000, "low": 9000, "high": 9900 }
+  },
+  {
+    "name": "living room lines",
+    "input": {
+      "area": 24,
+      "perimeter": 20,
+      "material": "matte",
+      "profile": "shadow",
+      "lights": 0,
+      "lines": 8,
+      "tracks": 0,
+      "curtain": 0,
+      "corners": 4,
+      "pipes": 0
+    },
+    "expected": { "subtotal": 38376, "total": 38376, "low": 36460, "high": 42210 }
+  },
+  {
+    "name": "floating bedroom",
+    "input": {
+      "area": 18,
+      "perimeter": 18,
+      "material": "satin",
+      "profile": "floating",
+      "lights": 0,
+      "lines": 0,
+      "tracks": 0,
+      "curtain": 0,
+      "corners": 4,
+      "pipes": 0
+    },
+    "expected": { "subtotal": 23220, "total": 23220, "low": 22060, "high": 25540 }
+  },
+  {
+    "name": "fractional lengths and every extra",
+    "input": {
+      "area": "18,5",
+      "perimeter": "18,2",
+      "material": "matte",
+      "profile": "standard",
+      "lights": 6,
+      "lines": 1.25,
+      "tracks": 0.5,
+      "curtain": 2.75,
+      "corners": 6,
+      "pipes": 1
+    },
+    "expected": { "subtotal": 21021.5, "total": 21021.5, "low": 19970, "high": 23120 }
+  }
+]

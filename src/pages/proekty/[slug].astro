@@ -1,0 +1,143 @@
+---
+import Arrow from '../../components/Arrow.astro';
+import Base from '../../layouts/Base.astro';
+import Media from '../../components/Media.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import ContactSection from '../../components/ContactSection.astro';
+import { projects } from '../../data/content';
+import { calculate, money } from '../../lib/pricing';
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+const { project } = Astro.props;
+const estimate = calculate(project.calculator);
+const related = projects.filter((item) => item.slug !== project.slug).slice(0, 2);
+---
+
+<Base
+  title={project.title}
+  description={`${project.subtitle}. ${project.intro} Комплектация и расчёт потолка для помещения ${project.area} м².`}
+  image={`/media/${project.image}-1200.jpg`}
+  breadcrumbs={[
+    { title: 'Проекты', href: '/proekty/' },
+    { title: project.room, href: `/proekty/${project.slug}/` },
+  ]}
+>
+  <div class="shell">
+    <div class="page-intro">
+      <h1>{project.title}</h1>
+      <p>{project.intro}</p>
+      <dl class="facts">
+        <div>
+          <dt>Помещение</dt>
+          <dd>{project.area} м²</dd>
+        </div>
+        <div>
+          <dt>Поверхность</dt>
+          <dd>{project.material}</dd>
+        </div>
+        <div>
+          <dt>Освещение</dt>
+          <dd>
+            {project.calculator.lines
+              ? 'Световые линии'
+              : project.calculator.tracks
+                ? 'Трековая система'
+                : project.calculator.profile === 'floating'
+                  ? 'Парящий контур'
+                  : 'Точечный свет'}
+          </dd>
+        </div>
+      </dl>
+    </div>
+    <div class="page-cover">
+      <Media name={project.image} alt={project.alt} priority sizes="100vw" lightbox />
+    </div>
+  </div>
+  <section class="section shell split-section">
+    <div>
+      <h2>Задача.</h2>
+      <p>{project.challenge}</p>
+    </div>
+    <div>
+      <h2>Решение.</h2>
+      <p>{project.result}</p>
+      <ul class="open-list">
+        {project.features.map((feature) => (
+          <li>{feature}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+  <div class="shell article-image">
+    <Media
+      name={project.detail}
+      alt={`Дополнительный ракурс: ${project.subtitle.toLowerCase()}`}
+      sizes="100vw"
+      lightbox
+    />
+  </div>
+  <section class="section shell split-section">
+    <div>
+      <h2>
+        Из чего складывается
+        <br />
+        этот проект.
+      </h2>
+      <p>
+        Предварительная стоимость по текущей комплектации. Геометрию, основание и оборудование
+        уточняем на замере.
+      </p>
+      <strong class="estimate-price">
+        {money(estimate.low)} – {money(estimate.high)}
+      </strong>
+      <a
+        class="button"
+        href={`/stoimost/?project=${project.slug}#calculator`}
+        data-event="project_to_calculator"
+      >
+        Рассчитать похожее{' '}
+        <span aria-hidden="true">
+          <Arrow />
+        </span>
+      </a>
+    </div>
+    <div>
+      <div class="estimate-rows">
+        {estimate.rows.map((row) => (
+          <div class="estimate-row">
+            <span>
+              {row.label} · {row.quantity} {row.unit}
+            </span>
+            <strong>{money(row.total)}</strong>
+          </div>
+        ))}
+        {estimate.minimumAdjustment > 0 && (
+          <div class="estimate-row">
+            <span>До минимального заказа</span>
+            <strong>{money(estimate.minimumAdjustment)}</strong>
+          </div>
+        )}
+      </div>
+      <p class="estimate-footnote">
+        Само осветительное оборудование для точечных и трековых систем, сложная проводка и
+        нестандартная подготовка основания в этот ориентир не включены. Итоговая смета согласуется
+        до работ.
+      </p>
+    </div>
+  </section>
+  <section class="section shell">
+    <div class="section-heading">
+      <h2>Другие пространства.</h2>
+      <a href="/proekty/" class="text-link">
+        Все проекты <Arrow />
+      </a>
+    </div>
+    <div class="projects-grid">
+      {related.map((item, index) => (
+        <ProjectCard project={item} index={index} />
+      ))}
+    </div>
+  </section>
+  <ContactSection source={`project:${project.slug}`} />
+</Base>

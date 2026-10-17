@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import ContactSection from '../components/ContactSection.astro';
+---
+
+<Base
+  title="Контакты — потолки и свет в Астрахани"
+  description="Свяжитесь с ПОЛЕ по телефону +7 996 420-65-69, в Telegram @garun_web или WhatsApp. Обсудим потолки и освещение, согласуем замер в Астрахани и области."
+  breadcrumbs={[{ title: 'Контакты', href: '/kontakty/' }]}
+>
+  <div class="shell">
+    <div class="page-intro">
+      <h1>
+        Давайте обсудим
+        <br />
+        ваше пространство.
+      </h1>
+      <p>
+        План квартиры, фотография комнаты или просто идея — хороший повод начать разговор. Для
+        выезда за пределы Астрахани сначала уточним адрес и условия.
+      </p>
+    </div>
+  </div>
+  <ContactSection source="contact" title="Удобнее написать или позвонить?" />
+</Base>

@@ -1,0 +1,63 @@
+---
+import Arrow from './Arrow.astro';
+import { site, navigation } from '../data/site';
+const path = Astro.url.pathname;
+---
+
+<a class="skip-link" href="#main">
+  К содержимому
+</a>
+<header class="site-header">
+  <div class="header-inner shell">
+    <a class="brand" href="/" aria-label="ПОЛЕ — на главную">
+      <img src="/brand/pole-logo.png" width="432" height="144" alt="ПОЛЕ" />
+    </a>
+    <nav class="desktop-nav" aria-label="Основная навигация">
+      {navigation.map(([href, label]) => (
+        <a href={href} aria-current={path.startsWith(href) ? 'page' : undefined}>
+          {label}
+        </a>
+      ))}
+    </nav>
+    <a class="header-phone" href={`tel:${site.tel}`} data-event="phone_click">
+      {site.phone}
+    </a>
+    <a class="button button-small header-cta" href="/stoimost/#calculator">
+      Рассчитать{' '}
+      <span aria-hidden="true">
+        <Arrow />
+      </span>
+    </a>
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      aria-label="Открыть меню"
+    >
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+  <nav class="mobile-menu shell" id="mobile-menu" aria-label="Мобильная навигация" hidden>
+    {navigation.map(([href, label]) => (
+      <a href={href} aria-current={path.startsWith(href) ? 'page' : undefined}>
+        {label}
+        <span aria-hidden="true">
+          <Arrow />
+        </span>
+      </a>
+    ))}
+    <a href={`tel:${site.tel}`} data-event="phone_click">
+      {site.phone}
+    </a>
+    <div class="mobile-menu-contacts">
+      <a href={site.telegram} target="_blank" rel="noopener" data-event="telegram_click">
+        Telegram <Arrow />
+      </a>
+      <a href={site.whatsapp} target="_blank" rel="noopener" data-event="whatsapp_click">
+        WhatsApp <Arrow />
+      </a>
+    </div>
+  </nav>
+</header>

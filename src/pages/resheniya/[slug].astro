@@ -1,0 +1,187 @@
+---
+import Arrow from '../../components/Arrow.astro';
+import Base from '../../layouts/Base.astro';
+import Media from '../../components/Media.astro';
+import FAQ from '../../components/FAQ.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import ContactSection from '../../components/ContactSection.astro';
+import { solutions, projects } from '../../data/content';
+import { variants } from '../../data/variants';
+export function getStaticPaths() {
+  return solutions.map((solution) => ({ params: { slug: solution.slug }, props: { solution } }));
+}
+const { solution } = Astro.props;
+const related = projects.filter(
+  (project) =>
+    project.solution === solution.slug ||
+    (solution.slug === 'svetovye-linii' && project.calculator.lines > 0),
+);
+const displayProjects = (
+  related.length ? related : projects.filter((project) => project.calculator.curtain > 0)
+).slice(0, 2);
+---
+
+<Base
+  title={`${solution.short} в Астрахани`}
+  description={solution.description}
+  image={`/media/${solution.image}-1200.jpg`}
+  breadcrumbs={[
+    { title: 'Решения', href: '/resheniya/' },
+    { title: solution.short, href: `/resheniya/${solution.slug}/` },
+  ]}
+>
+  <div class="shell">
+    <div class="page-intro">
+      <h1>{solution.title}</h1>
+      <p>{solution.description}</p>
+      <div class="actions">
+        <a class="button" href={`/stoimost/?solution=${solution.slug}#calculator`}>
+          Рассчитать решение{' '}
+          <span aria-hidden="true">
+            <Arrow />
+          </span>
+        </a>
+        <a class="text-link" href="#examples">
+          Посмотреть примеры <Arrow />
+        </a>
+      </div>
+    </div>
+    <div class="page-cover">
+      <Media name={solution.image} alt={solution.alt} priority sizes="100vw" lightbox />
+    </div>
+  </div>
+  <section class="section shell split-section">
+    <div>
+      <h2>{solution.short}</h2>
+      <p>{solution.intro}</p>
+      <ul class="open-list">
+        {solution.benefits.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </div>
+    <div>
+      <h3>Где решение раскрывается</h3>
+      <ul class="open-list">
+        {solution.applications.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+      <p>{solution.limitations}</p>
+      {solution.slug === 'faktury' && (
+        <>
+          <h3>В комплектации</h3>
+          <ul class="open-list">
+            {solution.included.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </>
+      )}
+    </div>
+  </section>
+  {variants[solution.slug] && (
+    <section class="section shell" id="examples">
+      <div class="section-heading">
+        <h2>
+          Два способа
+          <br />
+          работать с пространством.
+        </h2>
+      </div>
+      <div class="variants-grid">
+        {variants[solution.slug].map((item) => (
+          <article>
+            <Media
+              name={item.image}
+              alt={item.alt}
+              sizes="(max-width:760px) 100vw, 50vw"
+              lightbox
+            />
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+  {solution.slug === 'faktury' ? (
+    <section class="section shell" id="examples">
+      <div class="section-heading">
+        <h2>
+          Один интерьер.
+          <br />
+          Три разных ощущения.
+        </h2>
+      </div>
+      <div class="texture-grid">
+        {[
+          {
+            name: 'texture-matte',
+            title: 'Матовый',
+            text: 'Ровная спокойная поверхность. Свет остаётся мягким, предметы не отражаются.',
+          },
+          {
+            name: 'texture-satin',
+            title: 'Сатиновый',
+            text: 'Деликатный отблеск и мягкое рассеивание без чётких зеркальных отражений.',
+          },
+          {
+            name: 'texture-gloss',
+            title: 'Глянцевый',
+            text: 'Заметные отражения добавляют глубину и делают поверхность частью композиции.',
+          },
+        ].map((texture) => (
+          <article>
+            <Media
+              name={texture.name}
+              alt={`${texture.title} потолок в одной и той же интерьерной сцене`}
+              lightbox
+            />
+            <h3>{texture.title}</h3>
+            <p>{texture.text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  ) : (
+    <section class="section pricing-intro" id="construction">
+      <div class="shell split-section">
+        <div>
+          <h2>
+            Как устроена
+            <br />
+            чистая линия.
+          </h2>
+          <p>{solution.limitations}</p>
+          <h3 style="margin-top:40px">В комплектации</h3>
+          <ul class="open-list">
+            {solution.included.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
+        <Media
+          name={solution.detail}
+          alt={`Деталь решения: ${solution.short.toLowerCase()}`}
+          lightbox
+        />
+      </div>
+    </section>
+  )}
+  <section class="section shell">
+    <div class="section-heading">
+      <h2>В интерьере.</h2>
+      <a class="text-link" href="/proekty/">
+        Все проекты <Arrow />
+      </a>
+    </div>
+    <div class="projects-grid">
+      {displayProjects.map((project, index) => (
+        <ProjectCard project={project} index={index} />
+      ))}
+    </div>
+  </section>
+  <FAQ items={solution.faq} title="Перед выбором." />
+  <ContactSection source={`solution:${solution.slug}`} />
+</Base>

@@ -1,0 +1,458 @@
+[
+  {
+    "slug": "bathroom-detail",
+    "source": "assets-source\\bathroom-detail.png",
+    "sourceWidth": 1536,
+    "sourceHeight": 1024,
+    "sha256": "50453ce580ab4572e92747fbb8bd68afe272916e1eb6ba77568815868a2470d0",
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "generation": "Built-in imagegen; commissioned architectural photography; technical briefs in assets-source/prompts.md"
+  },
+  {
+    "slug": "bathroom-main",
+    "source": "assets-source\\bathroom-main.png",
+    "sourceWidth": 1536,
+    "sourceHeight": 1024,
+    "sha256": "4351ac1b1ab435b404663badc70b0288307fa6c2c1db7c077206ad74a56713b3",
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "generation": "Built-in imagegen; commissioned architectural photography; technical briefs in assets-source/prompts.md"
+  },
+  {
+    "slug": "bedroom-detail",
+    "source": "assets-source\\bedroom-detail.png",
+    "sourceWidth": 1536,
+    "sourceHeight": 1024,
+    "sha256": "c7eeb4c27e0129f0803f8e1998807729e366ae15917c566b2e1de18d109dc381",
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "generation": "Built-in imagegen; commissioned architectural photography; technical briefs in assets-source/prompts.md"
+  },
+  {
+    "slug": "bedroom-main",
+    "source": "assets-source\\bedroom-main.png",
+    "sourceWidth": 1536,
+    "sourceHeight": 1024,
+    "sha256": "43b474586094fd2e148078037983db9c4af3286184d58ee919f4522bfff35882",
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "generation": "Built-in imagegen; commissioned architectural photography; technical briefs in assets-source/prompts.md"
+  },
+  {
+    "slug": "child-detail",
+    "source": "assets-source\\child-detail.png",
+    "sourceWidth": 1536,
+    "sourceHeight": 1024,
+    "sha256": "a3f46d4d4d86579e4878f2b74adb57f150a33264c78ffd143049b2a26b93e097",
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "generation": "Built-in imagegen; commissioned architectural photography; technical briefs in assets-source/prompts.md"
+  },
+  {
+    "slug": "child-main",
+    "source": "assets-source\\child-main.png",
+    "sourceWidth": 1536,
+    "sourceHeight": 1024,
+    "sha256": "359a9cb9703b580cacb1a3b376f963253e1891fe72391c2e5ecdf4210af65a72",
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "generation": "Built-in imagegen; commissioned architectural photography; technical briefs in assets-source/prompts.md"
+  },
+  {
+    "slug": "detail-curtain",
+    "source": "assets-source\\detail-curtain.png",
+    "sourceWidth": 1536,
+    "sourceHeight": 1024,
+    "sha256": "0e3bfa4b11f52ee7132acf25effa09e4fe262056c707964a08dc32b909cfbc9b",
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "generation": "Built-in imagegen; commissioned architectural photography; technical briefs in assets-source/prompts.md"
+  },
+  {
+    "slug": "detail-floating",
+    "source": "assets-source\\detail-floating.png",
+    "sourceWidth": 1536,
+    "sourceHeight": 1024,
+    "sha256": "7f1b6075bef32e524d7352f581982c0998ade5dea97a3b860c64f5f21faeeb51",
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "generation": "Built-in imagegen; commissioned architectural photography; technical briefs in assets-source/prompts.md"
+  },
+  {
+    "slug": "detail-shadow",
+    "source": "assets-source\\detail-shadow.png",
+    "sourceWidth": 1536,
+    "sourceHeight": 1024,
+    "sha256": "209613a92161abd818201f65cdf6bf3b091309f6b11a42e65b5deb1ed4164cae",
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "generation": "Built-in imagegen; commissioned architectural photography; technical briefs in assets-source/prompts.md"
+  },
+  {
+    "slug": "detail-standard",
+    "source": "assets-source\\detail-standard.png",
+    "sourceWidth": 1536,
+    "sourceHeight": 1024,
+    "sha256": "be920a2271b0ac059c84dd90a8678a99e8b183b6e6ca8385ba634b31e66bd632",
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "generation": "Built-in imagegen; commissioned architectural photography; technical briefs in assets-source/prompts.md"
+  },
+  {
+    "slug": "hero-desktop",
+    "source": "assets-source\\hero-desktop.png",
+    "sourceWidth": 1536,
+    "sourceHeight": 1024,
+    "sha256": "d674e252159039f1ab1b5bb093c511acf63ed4e0977dd3805813a981ad09f278",
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "generation": "Built-in imagegen; commissioned architectural photography; technical briefs in assets-source/prompts.md"
+  },
+  {
+    "slug": "hero-mobile",
+    "source": "assets-source\\hero-mobile.png",
+    "sourceWidth": 1122,
+    "sourceHeight": 1402,
+    "sha256": "7fc07f51c71f332a8af692ff9aaee5f3c4b2a550678bfe11294648d588d31a1e",
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "generation": "Built-in imagegen; commissioned architectural photography; technical briefs in assets-source/prompts.md"
+  },
+  {
+    "slug": "kitchen-detail",
+    "source": "assets-source\\kitchen-detail.png",
+    "sourceWidth": 1536,
+    "sourceHeight": 1024,
+    "sha256": "238c8863ad255896e73d2f18ad7f5bcbe5e3a03bce863a7286427d6f53e1ab77",
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "generation": "Built-in imagegen; commissioned architectural photography; technical briefs in assets-source/prompts.md"
+  },
+  {
+    "slug": "kitchen-main",
+    "source": "assets-source\\kitchen-main.png",
+    "sourceWidth": 1536,
+    "sourceHeight": 1024,
+    "sha256": "804b7f772c0617505a24a7e0ed865b5d409d237d011b1051736d1bfd607afd16",
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "generation": "Built-in imagegen; commissioned architectural photography; technical briefs in assets-source/prompts.md"
+  },
+  {
+    "slug": "living-detail",
+    "source": "assets-source\\living-detail.png",
+    "sourceWidth": 1536,
+    "sourceHeight": 1024,
+    "sha256": "1f9160c32969a208c953115bf76431597d82b404657d0fa29882edf3f7b23be1",
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "generation": "Built-in imagegen; commissioned architectural photography; technical briefs in assets-source/prompts.md"
+  },
+  {
+    "slug": "living-main",
+    "source": "assets-source\\living-main.png",
+    "sourceWidth": 1536,
+    "sourceHeight": 1024,
+    "sha256": "07ee28b9a077480c766459198591e2ab36ee53e402289f5f8bdf16fa00ce6c04",
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "generation": "Built-in imagegen; commissioned architectural photography; technical briefs in assets-source/prompts.md"
+  },
+  {
+    "slug": "process-check",
+    "source": "assets-source\\process-check.png",
+    "sourceWidth": 1536,
+    "sourceHeight": 1024,
+    "sha256": "68afc6cb5d1859bf35f0ae58033f00af78afff3be6d73cc4b7e70a50879c60c7",
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "generation": "Built-in imagegen; commissioned architectural photography; technical briefs in assets-source/prompts.md"
+  },
+  {
+    "slug": "process-install",
+    "source": "assets-source\\process-install.png",
+    "sourceWidth": 1536,
+    "sourceHeight": 1024,
+    "sha256": "4dc8ed0280c250fa065aa9551a6509ab29cec02d6804721b9518f0523fc7653d",
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "generation": "Built-in imagegen; commissioned architectural photography; technical briefs in assets-source/prompts.md"
+  },
+  {
+    "slug": "process-measure",
+    "source": "assets-source\\process-measure.png",
+    "sourceWidth": 1536,
+    "sourceHeight": 1024,
+    "sha256": "6928a6a0aa30aeafc824a35e56a1e66976bbf6b84f3dea5135c486634cfd4225",
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "generation": "Built-in imagegen; commissioned architectural photography; technical briefs in assets-source/prompts.md"
+  },
+  {
+    "slug": "studio-detail",
+    "source": "assets-source\\studio-detail.png",
+    "sourceWidth": 1536,
+    "sourceHeight": 1024,
+    "sha256": "a761cc042eb245a8c84515bc535d40dbf31ab0b7c787b33c82c69e36853ed56d",
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "generation": "Built-in imagegen; commissioned architectural photography; technical briefs in assets-source/prompts.md"
+  },
+  {
+    "slug": "studio-main",
+    "source": "assets-source\\studio-main.png",
+    "sourceWidth": 1536,
+    "sourceHeight": 1024,
+    "sha256": "2b3c726abd396b81e2f03ad65e8c47324bf890b33b30a8bde7862d3cce0bff5c",
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "generation": "Built-in imagegen; commissioned architectural photography; technical briefs in assets-source/prompts.md"
+  },
+  {
+    "slug": "texture-gloss",
+    "source": "assets-source\\texture-gloss.png",
+    "sourceWidth": 1536,
+    "sourceHeight": 1024,
+    "sha256": "6b90bde722add019d9ce97f9d7432347684180626121c73a0e32b529d6ae868c",
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "generation": "Built-in imagegen; commissioned architectural photography; technical briefs in assets-source/prompts.md"
+  },
+  {
+    "slug": "texture-matte",
+    "source": "assets-source\\texture-matte.png",
+    "sourceWidth": 1536,
+    "sourceHeight": 1024,
+    "sha256": "b70b8abece9c45b08f91668b30d3ee2072e54783f0d609efdaf0cb31ac1fc750",
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "generation": "Built-in imagegen; commissioned architectural photography; technical briefs in assets-source/prompts.md"
+  },
+  {
+    "slug": "texture-satin",
+    "source": "assets-source\\texture-satin.png",
+    "sourceWidth": 1536,
+    "sourceHeight": 1024,
+    "sha256": "35865e29774b8424191ddd762684d36936864150ecdfec43a33de26470bb3c4f",
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "generation": "Built-in imagegen; commissioned architectural photography; technical briefs in assets-source/prompts.md"
+  }
+]

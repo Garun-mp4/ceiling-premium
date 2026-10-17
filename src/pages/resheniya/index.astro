@@ -1,0 +1,53 @@
+---
+import Arrow from '../../components/Arrow.astro';
+import Base from '../../layouts/Base.astro';
+import Media from '../../components/Media.astro';
+import ContactSection from '../../components/ContactSection.astro';
+import { solutions } from '../../data/content';
+---
+
+<Base
+  title="Решения для потолка и освещения"
+  description="Матовые и сатиновые фактуры, теневые и парящие потолки, световые линии, треки и скрытые карнизы. Подберите сочетание для своего интерьера."
+  breadcrumbs={[{ title: 'Решения', href: '/resheniya/' }]}
+>
+  <div class="shell">
+    <div class="page-intro">
+      <h1>
+        Поверхность.
+        <br />
+        Примыкание. Свет.
+      </h1>
+      <p>
+        Три решения, которые работают вместе. Начните с того, что важно для вашей комнаты, —
+        остальное поможем соединить.
+      </p>
+    </div>
+    <div class="projects-grid">
+      {solutions.map((solution) => (
+        <article class="project-card">
+          <a href={`/resheniya/${solution.slug}/`} class="project-link">
+            <div class="project-image">
+              <Media
+                name={solution.image}
+                alt={solution.alt}
+                sizes="(max-width:760px) 100vw, 50vw"
+              />
+              <span class="image-arrow" aria-hidden="true">
+                <Arrow />
+              </span>
+            </div>
+            <div class="project-meta">
+              <div>
+                <h2 style="font-size:30px">{solution.short}</h2>
+                <p style="margin-top:12px">{solution.description}</p>
+              </div>
+            </div>
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+  <div style="height:64px"></div>
+  <ContactSection source="solutions" />
+</Base>

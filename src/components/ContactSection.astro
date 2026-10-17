@@ -1,0 +1,31 @@
+---
+import Arrow from './Arrow.astro';
+import LeadForm from './LeadForm.astro';
+import { site } from '../data/site';
+const { source = 'home', title = 'Начнём с вашей комнаты.' } = Astro.props;
+---
+
+<section class="section contact-section" id="lead-form">
+  <div class="shell contact-grid">
+    <div class="contact-copy">
+      <h2>{title}</h2>
+      <p>
+        Расскажите, что хочется изменить. Подберём потолок и свет, объясним разницу решений и
+        подготовим понятную смету.
+      </p>
+      <a class="contact-phone" href={`tel:${site.tel}`} data-event="phone_click">
+        {site.phone}
+      </a>
+      <div class="contact-links">
+        <a href={site.telegram} target="_blank" rel="noopener" data-event="telegram_click">
+          Написать в Telegram <Arrow />
+        </a>
+        <a href={site.whatsapp} target="_blank" rel="noopener" data-event="whatsapp_click">
+          Написать в WhatsApp <Arrow />
+        </a>
+      </div>
+      <span class="region-note">Астрахань и Астраханская область</span>
+    </div>
+    <LeadForm source={source} />
+  </div>
+</section>

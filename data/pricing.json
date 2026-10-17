@@ -1,0 +1,38 @@
+{
+  "version": "2026-10-18",
+  "minimum": 9000,
+  "lowMultiplier": 0.95,
+  "highMultiplier": 1.1,
+  "materials": { "matte": 299, "satin": 390, "gloss": 450 },
+  "profiles": { "standard": 200, "shadow": 600, "floating": 900 },
+  "extras": {
+    "lights": 600,
+    "lines": 2400,
+    "tracks": 2200,
+    "curtain": 1200,
+    "corners": 250,
+    "pipes": 350
+  },
+  "bounds": {
+    "area": [2, 200],
+    "perimeter": [4, 160],
+    "lights": [0, 80],
+    "lines": [0, 80],
+    "tracks": [0, 80],
+    "curtain": [0, 40],
+    "corners": [4, 40],
+    "pipes": [0, 20]
+  },
+  "defaults": {
+    "area": 18,
+    "perimeter": 18,
+    "material": "matte",
+    "profile": "standard",
+    "lights": 6,
+    "lines": 0,
+    "tracks": 0,
+    "curtain": 0,
+    "corners": 4,
+    "pipes": 0
+  }
+}

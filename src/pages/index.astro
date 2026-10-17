@@ -1,0 +1,245 @@
+---
+import Arrow from '../components/Arrow.astro';
+import Base from '../layouts/Base.astro';
+import Media from '../components/Media.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import FAQ from '../components/FAQ.astro';
+import ContactSection from '../components/ContactSection.astro';
+import { projects, solutions } from '../data/content';
+import { steps, reviews } from '../data/site';
+---
+
+<Base
+  title="Натяжные потолки и продуманный свет в Астрахани"
+  description="ПОЛЕ — натяжные потолки, теневые примыкания и освещение в Астрахани. Подбираем решение под ваш интерьер, рассчитываем стоимость и монтируем по согласованной смете."
+>
+  <section class="hero shell" id="hero">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <h1>
+          Натяжные потолки.<span>Продуманный свет.</span>
+        </h1>
+        <p>
+          Подбираем потолок и освещение под ваш интерьер. От первого эскиза до последней чистой
+          линии.
+        </p>
+        <div class="actions">
+          <a class="button" href="/stoimost/#calculator">
+            Рассчитать стоимость{' '}
+            <span aria-hidden="true">
+              <Arrow />
+            </span>
+          </a>
+          <a class="text-link" href="/proekty/">
+            Посмотреть проекты{' '}
+            <span aria-hidden="true">
+              <Arrow />
+            </span>
+          </a>
+        </div>
+        <span class="hero-region">Астрахань и область · замер с образцами</span>
+      </div>
+      <div class="hero-image">
+        <Media
+          name="hero-desktop"
+          mobile="hero-mobile"
+          alt="Матовый потолок с тонкой световой линией в гостиной с оливковым диваном"
+          priority
+          sizes="(max-width: 760px) 100vw, 50vw"
+        />
+        <div class="hero-caption">
+          <span>Всё начинается с хорошей плоскости.</span>
+          <span aria-hidden="true">
+            ПОЛЕ <Arrow />
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="shell intro-line">
+    <h2>
+      В интерьере нет
+      <br />
+      второстепенных линий.
+    </h2>
+    <p>
+      Потолок связывает стены, мебель и свет. Мы продумываем его как часть пространства: где пройдёт
+      тень, откуда начнётся штора и каким будет вечер.
+    </p>
+  </div>
+  <section class="section shell" id="works">
+    <div class="section-heading">
+      <h2>
+        Разные комнаты.
+        <br />
+        Один точный подход.
+      </h2>
+      <a class="text-link" href="/proekty/">
+        Все проекты{' '}
+        <span aria-hidden="true">
+          <Arrow />
+        </span>
+      </a>
+    </div>
+    <div class="projects-grid featured">
+      {[projects[0], projects[2], projects[5]].map((project, index) => (
+        <ProjectCard project={project} index={index} />
+      ))}
+    </div>
+  </section>
+  <section class="section shell" id="types">
+    <div class="section-heading">
+      <h2>
+        Выберите характер
+        <br />
+        вашего пространства.
+      </h2>
+      <p>
+        Фактура — это поверхность полотна. Примыкание — его соединение со стеной. Освещение
+        подбирается отдельно: эти решения можно сочетать.
+      </p>
+    </div>
+    <div class="solution-list">
+      {solutions.slice(0, 4).map((solution) => (
+        <a class="solution-row" href={`/resheniya/${solution.slug}/`}>
+          <Media
+            name={solution.slug === 'faktury' ? 'texture-matte' : solution.detail}
+            alt=""
+            sizes="120px"
+          />
+          <h3>{solution.short}</h3>
+          <p>{solution.description}</p>
+          <span class="row-arrow" aria-hidden="true">
+            <Arrow />
+          </span>
+        </a>
+      ))}
+    </div>
+    <div style="margin-top:24px">
+      <a class="text-link" href="/resheniya/">
+        Все решения{' '}
+        <span aria-hidden="true">
+          <Arrow />
+        </span>
+      </a>
+    </div>
+  </section>
+  <section class="lighting-section">
+    <div class="shell lighting-grid">
+      <div class="lighting-media">
+        <Media name="detail-shadow" alt="Точная линия теневого примыкания белого потолка к стене" />
+      </div>
+      <div class="lighting-copy">
+        <h2>
+          Разница —<br />в деталях.
+        </h2>
+        <p>
+          Тонкая тень вместо плинтуса. Шторы, которые начинаются от потолка. Свет, для которого не
+          нужен отдельный предмет. Именно эти детали делают интерьер собранным.
+        </p>
+        <ul class="detail-points">
+          <li>Примыкания без случайных переходов</li>
+          <li>Освещение под привычки, а не только под план</li>
+          <li>Доступ к оборудованию продуман заранее</li>
+        </ul>
+        <a class="text-link" href="/resheniya/tenevye/">
+          Разобраться в деталях{' '}
+          <span aria-hidden="true">
+            <Arrow />
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+  <section class="section pricing-intro" id="calculator">
+    <div class="shell pricing-intro-grid">
+      <div>
+        <h2>
+          Хорошая смета
+          <br />
+          понятна с первого раза.
+        </h2>
+        <p>
+          Стоимость складывается из площади, профиля и света. Предварительный расчёт покажет каждую
+          позицию, а точную комплектацию согласуем на замере.
+        </p>
+        <a class="button" href="/stoimost/#calculator">
+          Рассчитать свою комнату{' '}
+          <span aria-hidden="true">
+            <Arrow />
+          </span>
+        </a>
+      </div>
+      <div>
+        <div class="cost-row">
+          <span>Полотно и его монтаж</span>
+          <strong>от 299 ₽/м²</strong>
+        </div>
+        <div class="cost-row">
+          <span>Профиль и примыкание</span>
+          <strong>от 200 ₽/пог. м</strong>
+        </div>
+        <div class="cost-row">
+          <span>Свет и дополнительные работы</span>
+          <strong>по комплектации</strong>
+        </div>
+        <div class="cost-row">
+          <span>Минимальный заказ</span>
+          <strong>9 000 ₽</strong>
+        </div>
+        <p class="estimate-footnote">
+          Цена за м² — только одна часть сметы. Светильники, нестандартная электрика и подготовка
+          основания уточняются отдельно.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section class="section shell" id="steps">
+    <div class="section-heading">
+      <h2>
+        От идеи
+        <br />к готовому пространству.
+      </h2>
+      <p>На каждом этапе понятно, что будет дальше.</p>
+    </div>
+    <div class="process-grid">
+      {steps.map((step, index) => (
+        <article class="process-item">
+          <span>0{index + 1}</span>
+          <h3>{step.title}</h3>
+          <p>{step.text}</p>
+        </article>
+      ))}
+    </div>
+    <div class="process-photo">
+      <Media
+        name="process-install"
+        alt="Монтаж натяжного потолка в защищённом подготовленном помещении"
+        sizes="100vw"
+      />
+    </div>
+  </section>
+  <section class="section shell" id="reviews">
+    <div class="section-heading">
+      <h2>
+        То, что остаётся
+        <br />
+        после монтажа.
+      </h2>
+      <p>Впечатления о деталях, свете и самом процессе.</p>
+    </div>
+    <div class="reviews-grid">
+      {reviews.map((review) => (
+        <article class="review">
+          <blockquote>«{review.text}»</blockquote>
+          <footer>
+            {review.name}
+            <span>{review.detail}</span>
+          </footer>
+        </article>
+      ))}
+    </div>
+  </section>
+  <FAQ />
+  <ContactSection />
+</Base>
