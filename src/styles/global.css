@@ -406,7 +406,7 @@ hr {
   height: 100%;
 }
 .hero-image img {
-  object-position: 42% 40%;
+  object-position: 42% top;
 }
 .hero-caption {
   position: absolute;
@@ -429,6 +429,13 @@ hr {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+/* Wide interior frames keep the ceiling; construction close-ups retain their own center crop. */
+.project-image img,
+.page-cover img,
+.article-image img,
+.process-photo img {
+  object-position: center top;
 }
 .intro-line {
   display: grid;
@@ -646,7 +653,7 @@ hr {
   margin-top: 45px;
   border-radius: var(--radius);
   overflow: hidden;
-  aspect-ratio: 2.7;
+  aspect-ratio: 2.1;
 }
 .process-photo .media {
   height: 100%;
@@ -1462,7 +1469,7 @@ hr {
     height: 350px;
   }
   .hero-image img {
-    object-position: 50% 35%;
+    object-position: center top;
   }
   .hero-caption {
     bottom: 16px;

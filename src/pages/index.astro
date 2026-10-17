@@ -40,12 +40,13 @@ import { steps, reviews } from '../data/site';
         <span class="hero-region">Астрахань и область · замер с образцами</span>
       </div>
       <div class="hero-image">
+        {/* Desktop cover scales the 3:2 source to the frame height; size that full image, not just the visible column. */}
         <Media
           name="hero-desktop"
           mobile="hero-mobile"
           alt="Матовый потолок с тонкой световой линией в гостиной с оливковым диваном"
           priority
-          sizes="(max-width: 760px) 100vw, 50vw"
+          sizes="(max-width: 760px) 100vw, (max-width: 1000px) 750px, (max-width: 1250px) 795px, (min-width: 1600px) 930px, 870px"
         />
         <div class="hero-caption">
           <span>Всё начинается с хорошей плоскости.</span>
