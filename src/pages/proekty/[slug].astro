@@ -50,7 +50,7 @@ const related = projects.filter((item) => item.slug !== project.slug).slice(0, 2
         </div>
       </dl>
     </div>
-    <div class="page-cover">
+    <div class="page-cover" style={`view-transition-name:project-${project.slug}`}>
       <Media name={project.image} alt={project.alt} priority sizes="100vw" lightbox />
     </div>
   </div>

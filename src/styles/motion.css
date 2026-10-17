@@ -1,0 +1,313 @@
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --motion-fast: 160ms;
+  --motion-ui: 220ms;
+}
+
+.button {
+  transition:
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    transform var(--motion-fast) var(--ease-out);
+}
+.button:active:not(:disabled):not([aria-disabled='true']) {
+  transform: scale(0.98);
+}
+.button:disabled:active {
+  transform: none;
+}
+.arrow-icon {
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+.project-image img {
+  transition: transform 280ms var(--ease-out);
+}
+.project-link:hover img {
+  transform: none;
+}
+.menu-toggle span,
+.faq-list summary > span {
+  transition: transform var(--motion-ui) var(--ease-out);
+}
+.mobile-menu {
+  transform-origin: calc(100% - 40px) top;
+}
+.mobile-menu[inert] {
+  pointer-events: none;
+}
+.filter-button {
+  transition:
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    border-color var(--motion-fast) ease;
+}
+.lightbox[data-closing] {
+  pointer-events: none;
+}
+.lightbox::backdrop {
+  opacity: 1;
+  transition: opacity 160ms var(--ease-out);
+}
+.lightbox[data-closing]::backdrop {
+  opacity: 0;
+}
+@starting-style {
+  .lightbox[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+.form-status {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  align-items: start;
+  gap: 14px;
+  margin: 18px 0 0;
+  padding: 0;
+  min-height: 0;
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.55;
+}
+.form-status:not([data-state]) {
+  margin: 0;
+}
+.form-status:not([data-state]) > .status-symbol {
+  display: none;
+}
+.form-status[data-state='busy'] {
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+}
+.form-status[data-state='success'],
+.form-status[data-state='error'],
+.form-status[data-state='uncertain'] {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--canvas);
+}
+.form-status[data-state='success'] {
+  border-color: #adb6a6;
+}
+.form-status[data-state='error'],
+.form-status[data-state='uncertain'] {
+  border-color: #d7bdb3;
+}
+.status-symbol {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+.status-symbol circle,
+.status-symbol path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.status-symbol .status-check,
+.status-symbol .status-cross,
+.status-symbol .status-wait {
+  display: none;
+}
+.form-status[data-state='success'] .status-check {
+  display: block;
+  color: #3d5739;
+}
+.form-status[data-state='error'] .status-cross {
+  display: block;
+  color: var(--error);
+}
+.form-status[data-state='uncertain'] .status-wait,
+.form-status[data-state='busy'] .status-wait {
+  display: block;
+}
+.status-title {
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.45;
+  margin: 2px 0 7px;
+}
+.status-message {
+  margin: 0;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.status-retry {
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  background: none;
+  margin-top: 10px;
+  min-height: 44px;
+  padding: 8px 0;
+  font-size: 13px;
+}
+body:has(.form-status:focus-within) .mobile-contact-bar {
+  visibility: hidden;
+  pointer-events: none;
+}
+.lead-form button[type='submit'] > .submit-spinner {
+  display: none;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.lead-form[aria-busy='true'] button[type='submit'] > .submit-spinner {
+  display: inline-block;
+}
+.lead-form[aria-busy='true'] button[type='submit'] > .submit-arrow {
+  display: none;
+}
+.lead-form:has(.form-status[data-state='success']) button[type='submit'] {
+  opacity: 1;
+  cursor: default;
+}
+.lead-form:has(.form-status[data-state='success']) .submit-arrow {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .project-link:hover img {
+    transform: scale(1.025);
+  }
+  .button:hover:not(:disabled):not([aria-disabled='true']) .arrow-icon,
+  .text-link:hover .arrow-icon,
+  .solution-row:hover .arrow-icon {
+    transform: translate(2px, -2px);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+  .site-header {
+    view-transition-name: pole-header;
+  }
+  .mobile-contact-bar {
+    view-transition-name: pole-contact-bar;
+  }
+  ::view-transition-group(*) {
+    animation-duration: 280ms;
+    animation-timing-function: var(--ease-in-out);
+  }
+  ::view-transition-old(root) {
+    animation: pole-page-out 120ms var(--ease-out) both;
+  }
+  ::view-transition-new(root) {
+    animation: pole-page-in 180ms var(--ease-out) both;
+  }
+  ::view-transition-group(pole-header),
+  ::view-transition-group(pole-contact-bar) {
+    animation: none;
+  }
+  ::view-transition-old(pole-header),
+  ::view-transition-old(pole-contact-bar) {
+    animation: none;
+    opacity: 0;
+  }
+  ::view-transition-new(pole-header),
+  ::view-transition-new(pole-contact-bar) {
+    animation: none;
+  }
+  .hero-image .media {
+    animation: pole-image-settle 650ms var(--ease-out) both;
+  }
+  .lead-form[aria-busy='true'] .submit-spinner {
+    animation: pole-spin 800ms linear infinite;
+  }
+  .form-status[data-state='success'] .status-check path {
+    stroke-dasharray: 22;
+    stroke-dashoffset: 0;
+    animation: pole-check 280ms var(--ease-out) both;
+  }
+}
+@supports (interpolate-size: allow-keywords) and selector(::details-content) {
+  @media (prefers-reduced-motion: no-preference) {
+    .faq-list details::details-content,
+    .calc-extra::details-content {
+      interpolate-size: allow-keywords;
+      block-size: 0;
+      opacity: 0;
+      overflow: clip;
+      transition:
+        block-size 200ms var(--ease-out),
+        opacity 160ms ease,
+        content-visibility 200ms allow-discrete;
+    }
+    .faq-list details[open]::details-content,
+    .calc-extra[open]::details-content {
+      block-size: auto;
+      opacity: 1;
+    }
+  }
+}
+:root[data-input='keyboard'] .menu-toggle span,
+:root[data-input='keyboard'] .faq-list summary > span,
+:root[data-input='keyboard'] details::details-content {
+  transition: none;
+}
+:root[data-input='keyboard'] .status-check path {
+  animation: none;
+}
+:root[data-input='keyboard'] .button {
+  transition: none;
+}
+:root[data-input='keyboard'] .button:active {
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+  .button:active,
+  .project-link:hover img {
+    transform: none;
+  }
+  .submit-spinner {
+    border-right-color: currentColor;
+  }
+}
+@keyframes pole-page-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes pole-page-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes pole-image-settle {
+  from {
+    transform: scale(1.025);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes pole-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes pole-check {
+  from {
+    stroke-dashoffset: 22;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}

@@ -6,6 +6,9 @@ import {
   normalizePhone,
   type CalculatorInput,
 } from '../lib/pricing';
+import { cancelMotion, initPhotoReveals, setMenuOpen, tween } from './motion';
+
+initPhotoReveals();
 
 declare global {
   interface Window {
@@ -108,23 +111,23 @@ $$<HTMLElement>('[data-event]').forEach((node) =>
 
 const menu = $<HTMLElement>('#mobile-menu'),
   toggle = $<HTMLButtonElement>('.menu-toggle');
-function closeMenu(returnFocus = false) {
-  if (menu) menu.hidden = true;
+function closeMenu(returnFocus = false, instant = false) {
+  if (menu) setMenuOpen(menu, false, instant || returnFocus);
   toggle?.setAttribute('aria-expanded', 'false');
   toggle?.setAttribute('aria-label', 'Открыть меню');
   if (returnFocus) toggle?.focus();
 }
-toggle?.addEventListener('click', () => {
+toggle?.addEventListener('click', (e) => {
   const open = toggle.getAttribute('aria-expanded') === 'true';
-  if (open) closeMenu();
+  if (open) closeMenu(false, e.detail === 0);
   else {
-    if (menu) menu.hidden = false;
+    if (menu) setMenuOpen(menu, true, e.detail === 0);
     toggle.setAttribute('aria-expanded', 'true');
     toggle.setAttribute('aria-label', 'Закрыть меню');
   }
 });
 menu?.addEventListener('click', (e) => {
-  if ((e.target as Element).closest('a')) closeMenu();
+  if ((e.target as Element).closest('a')) closeMenu(false, true);
 });
 document.addEventListener('click', (e) => {
   if (!(e.target as Element).closest('.site-header')) closeMenu();
@@ -133,7 +136,7 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') closeMenu(true);
 });
 matchMedia('(min-width: 761px)').addEventListener('change', (e) => {
-  if (e.matches) closeMenu();
+  if (e.matches) closeMenu(false, true);
 });
 
 const filters = $<HTMLElement>('[data-project-filters]');
@@ -308,7 +311,36 @@ if (calculator) {
 $$<HTMLFormElement>('[data-lead-form]').forEach((form) => {
   const status = $<HTMLElement>('.form-status', form)!;
   const submit = $<HTMLButtonElement>('button[type=submit]', form)!;
+  const submitLabel = $<HTMLElement>('[data-submit-label]', submit)!;
   submit.disabled = false;
+  const resultContent = $<HTMLElement>('[data-status-content]', status)!;
+  const statusTitle = $<HTMLElement>('[data-status-title]', status)!;
+  const statusMessage = $<HTMLElement>('[data-status-message]', status)!;
+  const retry = $<HTMLButtonElement>('[data-status-retry]', status)!;
+  function showStatus(
+    state: 'busy' | 'success' | 'error' | 'uncertain' | null,
+    title = '',
+    message = '',
+  ) {
+    cancelMotion(status);
+    if (state) status.dataset.state = state;
+    else delete status.dataset.state;
+    resultContent.hidden = !state;
+    statusTitle.textContent = title;
+    statusMessage.textContent = message;
+    retry.hidden = state !== 'error' && state !== 'uncertain';
+    retry.textContent = state === 'uncertain' ? 'Проверить ещё раз' : 'Попробовать ещё раз';
+    if (state && state !== 'busy')
+      tween(
+        status,
+        [
+          { opacity: 0.65, transform: 'translateY(6px)' },
+          { opacity: 1, transform: 'none' },
+        ],
+        { duration: 240 },
+      );
+  }
+  retry.addEventListener('click', () => form.requestSubmit(submit));
   let busy = false;
   let requestId = crypto.randomUUID();
   let submitted = false;
@@ -321,6 +353,9 @@ $$<HTMLFormElement>('[data-lead-form]').forEach((form) => {
     if (submitted) {
       submitted = false;
       requestId = crypto.randomUUID();
+      submit.disabled = false;
+      submitLabel.textContent = 'Обсудить мой проект';
+      showStatus(null);
     }
   });
   form.addEventListener('submit', async (e) => {
@@ -346,7 +381,7 @@ $$<HTMLFormElement>('[data-lead-form]').forEach((form) => {
         field.setAttribute('aria-describedby', node.id);
       }
     });
-    status.textContent = '';
+    showStatus(null);
     if (Object.keys(errors).length) {
       event('lead_validation_error');
       (form.elements.namedItem(Object.keys(errors)[0]) as HTMLElement)?.focus();
@@ -354,9 +389,9 @@ $$<HTMLFormElement>('[data-lead-form]').forEach((form) => {
     }
     busy = true;
     submit.disabled = true;
+    submitLabel.textContent = 'Отправляем обращение';
     form.setAttribute('aria-busy', 'true');
-    status.dataset.state = 'busy';
-    status.textContent = 'Отправляем обращение…';
+    showStatus('busy', 'Отправляем обращение', 'Дождитесь подтверждения отправки.');
     const utm: Record<string, string> = {};
     const search = new URL(location.href).searchParams;
     for (const key of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']) {
@@ -378,6 +413,8 @@ $$<HTMLFormElement>('[data-lead-form]').forEach((form) => {
     };
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 18000);
+    let responseReceived = false;
+    let uncertain = false;
     try {
       const response = await fetch('/api/lead', {
         method: 'POST',
@@ -386,8 +423,12 @@ $$<HTMLFormElement>('[data-lead-form]').forEach((form) => {
         signal: controller.signal,
       });
       const data = await response.json().catch(() => ({}));
+      responseReceived = true;
       if (!response.ok || data.ok !== true) {
+        uncertain = data.error === 'delivery_pending' || response.status === 409 || !data.error;
         const messages: Record<string, string> = {
+          delivery_unavailable:
+            'Сервис отправки временно недоступен. Повторите попытку или напишите нам в Telegram / WhatsApp.',
           rate_limited: 'Слишком много обращений. Подождите минуту или напишите нам напрямую.',
           phone_required: 'Проверьте номер телефона.',
           privacy_consent_required: 'Подтвердите согласие на обработку данных.',
@@ -401,24 +442,33 @@ $$<HTMLFormElement>('[data-lead-form]').forEach((form) => {
         );
       }
       submitted = true;
-      status.dataset.state = 'success';
-      status.textContent = `Обращение отправлено. Свяжемся с вами для обсуждения проекта. Номер: ${data.requestId || requestId}.`;
+      showStatus(
+        'success',
+        'Обращение отправлено',
+        `Свяжемся с вами для обсуждения проекта. Номер обращения: ${data.requestId || requestId}.`,
+      );
       event('lead_success');
       form.reset();
     } catch (error) {
-      status.dataset.state = 'error';
-      status.textContent =
-        error instanceof DOMException && error.name === 'AbortError'
-          ? 'Пока нет подтверждения доставки. Не отправляйте повторно сразу — можно связаться с нами в мессенджере.'
-          : error instanceof Error
-            ? error.message
-            : 'Нет соединения. Попробуйте позже или напишите в мессенджер.';
+      const pending = uncertain || !responseReceived;
+      const message = pending
+        ? 'Пока нет подтверждения доставки. Подождите немного, затем проверьте отправку ещё раз или напишите нам в Telegram / WhatsApp.'
+        : error instanceof Error
+          ? error.message
+          : 'Не удалось отправить обращение. Попробуйте позже или напишите в мессенджер.';
+      showStatus(
+        pending ? 'uncertain' : 'error',
+        pending ? 'Пока нет подтверждения' : 'Не получилось отправить',
+        message,
+      );
     } finally {
       clearTimeout(timeout);
       busy = false;
-      submit.disabled = false;
+      submit.disabled = submitted;
+      submitLabel.textContent = submitted ? 'Обращение отправлено' : 'Обсудить мой проект';
       form.removeAttribute('aria-busy');
-      status.focus({ preventScroll: true });
+      const bounds = submit.getBoundingClientRect();
+      status.focus({ preventScroll: bounds.top >= innerHeight || bounds.bottom <= 0 });
     }
   });
 });
@@ -428,50 +478,101 @@ const photos = $$<HTMLImageElement>('[data-lightbox]');
 if (dialog && photos.length) {
   let index = 0;
   let previous: HTMLElement | null = null;
+  let photoRequest = 0;
   const image = $<HTMLImageElement>('figure img', dialog)!;
   const caption = $<HTMLElement>('figcaption', dialog)!;
-  function showPhoto() {
+  function showPhoto(direction = 0, instant = true) {
     const photo = photos[index];
-    image.src = photo.dataset.lightbox!;
+    const request = ++photoRequest;
+    cancelMotion(image);
+    // Show the available photograph immediately, then upgrade it after decoding.
+    image.src = photo.currentSrc || photo.src;
     image.alt = photo.alt;
     caption.textContent = `${photo.alt} · ${index + 1} / ${photos.length}`;
+    if (!instant)
+      tween(
+        image,
+        [
+          { opacity: 0.7, transform: `translateX(${direction * 8}px) scale(.99)` },
+          { opacity: 1, transform: 'none' },
+        ],
+        { duration: 200 },
+      );
+    const full = new Image();
+    full.src = photo.dataset.lightbox!;
+    full.decode().then(
+      () => {
+        if (request === photoRequest && dialog!.open) image.src = full.src;
+      },
+      () => {
+        /* The rendered photograph remains available if the larger file fails. */
+      },
+    );
   }
-  function closeViewer() {
-    dialog!.close();
-    document.body.classList.remove('dialog-open');
-    previous?.focus({ preventScroll: true });
+  function closeViewer(instant = false) {
+    if (!dialog!.open) return;
+    dialog!.dataset.closing = 'true';
+    const current = getComputedStyle(dialog!);
+    tween(
+      dialog!,
+      [
+        { opacity: current.opacity, transform: current.transform },
+        { opacity: 0, transform: 'scale(.98)' },
+      ],
+      {
+        duration: 160,
+        instant,
+        finish: () => {
+          dialog!.close();
+          delete dialog!.dataset.closing;
+          document.body.classList.remove('dialog-open');
+          previous?.focus({ preventScroll: true });
+        },
+      },
+    );
   }
   photos.forEach((photo, i) => {
     photo.tabIndex = 0;
     photo.setAttribute('role', 'button');
     photo.setAttribute('aria-label', `Открыть: ${photo.alt}`);
-    const open = () => {
+    const open = (instant = false) => {
       index = i;
       previous = photo;
       showPhoto();
+      delete dialog.dataset.closing;
       dialog.showModal();
       document.body.classList.add('dialog-open');
+      tween(
+        dialog,
+        [
+          { opacity: 0, transform: 'scale(.98)' },
+          { opacity: 1, transform: 'none' },
+        ],
+        { duration: 240, instant },
+      );
     };
-    photo.addEventListener('click', open);
+    photo.addEventListener('click', (e) => open(e.detail === 0));
     photo.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        open();
+        open(true);
       }
     });
   });
-  $<HTMLButtonElement>('.lightbox-close', dialog)?.addEventListener('click', closeViewer);
-  $<HTMLButtonElement>('.lightbox-prev', dialog)?.addEventListener('click', () => {
+  $<HTMLButtonElement>('.lightbox-close', dialog)?.addEventListener('click', (e) =>
+    closeViewer(e.detail === 0),
+  );
+  $<HTMLButtonElement>('.lightbox-prev', dialog)?.addEventListener('click', (e) => {
     index = (index - 1 + photos.length) % photos.length;
-    showPhoto();
+    showPhoto(-1, e.detail === 0);
   });
-  $<HTMLButtonElement>('.lightbox-next', dialog)?.addEventListener('click', () => {
+  $<HTMLButtonElement>('.lightbox-next', dialog)?.addEventListener('click', (e) => {
     index = (index + 1) % photos.length;
-    showPhoto();
+    showPhoto(1, e.detail === 0);
   });
   dialog.addEventListener('cancel', (e) => {
     e.preventDefault();
-    closeViewer();
+    closeViewer(true);
   });
   dialog.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight') {

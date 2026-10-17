@@ -66,12 +66,35 @@ const { source = 'contact' } = Astro.props;
   </label>
   <span class="field-error" data-error="privacyConsent"></span>
   <button class="button" type="submit" disabled>
-    Обсудить мой проект{' '}
-    <span aria-hidden="true">
+    <span data-submit-label>Обсудить мой проект</span>
+    <span class="submit-spinner" aria-hidden="true"></span>
+    <span class="submit-arrow" aria-hidden="true">
       <Arrow />
     </span>
   </button>
-  <p class="form-status" role="status" aria-live="polite" tabindex="-1"></p>
+  <div class="form-status" role="status" aria-live="polite" aria-atomic="true" tabindex="-1">
+    <svg class="status-symbol" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+      <g class="status-check">
+        <circle cx="14" cy="14" r="12" />
+        <path d="m8 14 4 4 8-8" />
+      </g>
+      <g class="status-cross">
+        <circle cx="14" cy="14" r="12" />
+        <path d="m10 10 8 8m0-8-8 8" />
+      </g>
+      <g class="status-wait">
+        <circle cx="14" cy="14" r="12" />
+        <path d="M14 7v7l4 3" />
+      </g>
+    </svg>
+    <div data-status-content hidden>
+      <strong class="status-title" data-status-title></strong>
+      <p class="status-message" data-status-message></p>
+      <button class="text-link status-retry" type="button" data-status-retry hidden>
+        Попробовать ещё раз
+      </button>
+    </div>
+  </div>
   <noscript>
     <p>
       Для отправки формы включите JavaScript или <a href={site.telegram}>напишите нам в Telegram</a>

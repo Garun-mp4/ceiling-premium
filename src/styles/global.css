@@ -835,17 +835,6 @@ hr {
 .consent-label a {
   text-decoration: underline;
 }
-.form-status {
-  font-size: 14px;
-  min-height: 24px;
-  margin: 0;
-}
-.form-status[data-state='error'] {
-  color: var(--error);
-}
-.form-status[data-state='success'] {
-  color: #315b39;
-}
 .honeypot {
   position: absolute;
   left: -9999px;

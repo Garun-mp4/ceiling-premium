@@ -12,7 +12,7 @@ const { project, index = 0 } = Astro.props as { project: Project; index?: number
   data-solution={project.solution}
 >
   <a href={`/proekty/${project.slug}/`} class="project-link">
-    <div class="project-image">
+    <div class="project-image" data-transition-name={`project-${project.slug}`}>
       <Media name={project.image} alt={project.alt} sizes="(max-width: 760px) 100vw, 50vw" />
       <span class="image-arrow" aria-hidden="true">
         <Arrow />
