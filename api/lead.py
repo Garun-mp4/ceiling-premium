@@ -200,7 +200,7 @@ def add_nested_fields(lines, data, prefix=""):
 def build_telegram_message(payload):
     now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
 
-    lines = ["Новая заявка с сайта Потолок.Премиум", ""]
+    lines = ["Новая заявка с сайта ПОЛЕ", ""]
     add_field(lines, "Имя", payload.get("name"))
     add_field(lines, "Телефон", payload.get("phone"))
     add_field(lines, "Комментарий", payload.get("comment"))

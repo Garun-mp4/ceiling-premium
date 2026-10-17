@@ -104,6 +104,18 @@ textarea:focus-visible {
   letter-spacing: 0;
 }
 
+.logo {
+  display: inline-flex;
+  align-items: center;
+  width: 192px;
+  min-height: 44px;
+}
+
+.logo img {
+  width: 100%;
+  height: auto;
+}
+
 .header-region {
   margin: 0;
   padding: 0.35rem 0.65rem;
